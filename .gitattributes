@@ -3,3 +3,6 @@
 *.Scenes/ filter=lfs diff=lfs merge=lfs -text
 *.Sprites/ filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
+Assets/*Sprites* filter=lfs diff=lfs merge=lfs -text
+Assets/prefub* filter=lfs diff=lfs merge=lfs -text
+Assets/Scenes* filter=lfs diff=lfs merge=lfs -text
