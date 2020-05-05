@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerMove : MonoBehaviour
 {
@@ -11,12 +13,14 @@ public class PlayerMove : MonoBehaviour
     public Camera cam;
     [Header("Коэффициент для прекращения прыжка при отжатии кнопки")]
     public float kFall = 1;
+    public int hp = 3;
 
     private float speed = 0;
     private bool grounded = false;
     private float jumpHold = 1;
     private Rigidbody2D physics;
     private bool freeJump = true;
+    private bool unmortal = false;
 
     private void Start()
     {
@@ -30,12 +34,32 @@ public class PlayerMove : MonoBehaviour
         {
             grounded = true;
             freeJump = true;
+            unmortal = false;
             jumpHold = maxJumpHold;
         }
         
     }
-    
-    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if ((collision.transform.tag == "damageZone")&& !unmortal)
+        {
+            hp--;
+            physics.AddForce(new Vector2(-transform.localScale.x/Mathf.Abs(transform.localScale.x)*100, 600));
+            unmortal = true;
+            if (hp < 0) Deatch();
+        }
+        if (collision.transform.tag == "deatchZone")
+        {
+            Deatch();
+        }
+    }
+
+    public void Deatch()
+    {
+        GameObject.Destroy(gameObject);
+        SceneManager.LoadScene("SampleScene");
+    }
 
     // Update is called once per frame
     void Update()

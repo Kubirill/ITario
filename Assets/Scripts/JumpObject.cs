@@ -13,6 +13,7 @@ public class JumpObject : MonoBehaviour
         {
             //collision.GetComponent<PlayerMove>().MustJump(jumpStrenght);
             collision.GetComponentInParent<PlayerMove>().MustJump(jumpStrenght);
+            if (gameObject.GetComponentInParent<Enemys>() != null) gameObject.GetComponentInParent<Enemys>().Damage(1);
         }
     }
 
