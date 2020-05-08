@@ -16,29 +16,42 @@ public class PlayerMove : MonoBehaviour
     public int hp = 3;
 
     private float speed = 0;
-    private bool grounded = false;
     private float jumpHold = 1;
     private Rigidbody2D physics;
     private bool freeJump = true;
     private bool unmortal = false;
+    private Animator anim;
 
     private void Start()
     {
         physics = gameObject.GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
-
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
         if (collision.transform.tag == "ground")
         {
-            grounded = true;
+            
             freeJump = true;
             unmortal = false;
+            anim.SetBool("OnGround", true);
             jumpHold = maxJumpHold;
         }
         
     }
+   
+    
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.transform.tag == "ground")
+        {
+            
+            anim.SetBool("OnGround", false);
+        }
+    }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -65,13 +78,13 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         speed = Mathf.Clamp(speed + Controll.GetHorizontalMove()* accelerate*Time.deltaTime,-MaxSpeed,MaxSpeed);
+        anim.SetFloat("speedPanda", speed);
         if (speed < 0) transform.localScale= new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         else transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         transform.position = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
-        if (grounded && Controll.GetJumpStart())
+        if (anim.GetBool("OnGround") && Controll.GetJumpStart())
         {
             physics.AddForce(new Vector2(0f, maxJumpStrengh));
-            grounded = false;
         }
         if ((Controll.GetJumpHold()) && (jumpHold > 0))
         {
@@ -92,7 +105,7 @@ public class PlayerMove : MonoBehaviour
         //physics.AddForce(new Vector2(0f, strenghtJump));
         if (Controll.GetJumpHold()) strenghtJump = strenghtJump * 1.5f;
         physics.velocity = new Vector2(0f, strenghtJump);
-        grounded = false;
+       
         freeJump = false;
     }
 }
