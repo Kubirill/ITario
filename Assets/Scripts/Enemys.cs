@@ -19,7 +19,7 @@ public class Enemys : MonoBehaviour
     private void Update()
     {
         transform.position = new Vector3 (transform.position.x+speed*Time.deltaTime, transform.position.y, transform.position.z);
-        if ((transform.position.x < patrulPointOne.x) || (transform.position.x > patrulPointTwo.x))
+        if (((transform.position.x < patrulPointOne.x)&&(speed <0)) || ((transform.position.x > patrulPointTwo.x) && (speed > 0)))
         {
             speed = -speed;
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);

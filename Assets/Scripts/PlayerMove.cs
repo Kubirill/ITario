@@ -45,7 +45,7 @@ public class PlayerMove : MonoBehaviour
         if ((collision.transform.tag == "damageZone")&& !unmortal)
         {
             hp--;
-            physics.AddForce(new Vector2(-transform.localScale.x/Mathf.Abs(transform.localScale.x)*100, 600));
+            physics.velocity=new Vector2(-transform.localScale.x/Mathf.Abs(transform.localScale.x)*2, 10);
             unmortal = true;
             if (hp < 0) Deatch();
         }
@@ -65,6 +65,8 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         speed = Mathf.Clamp(speed + Controll.GetHorizontalMove()* accelerate*Time.deltaTime,-MaxSpeed,MaxSpeed);
+        if (speed < 0) transform.localScale= new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        else transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         transform.position = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
         if (grounded && Controll.GetJumpStart())
         {
@@ -80,7 +82,7 @@ public class PlayerMove : MonoBehaviour
         {
             physics.AddForce(new Vector2(0f,-physics.velocity.y*kFall));
         }
-        cam.transform.position= new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,cam.transform.position.z);
+        if (cam.transform.position.x<transform.position.x-1)        cam.transform.position= new Vector3(gameObject.transform.position.x-1, cam.transform.position.y,cam.transform.position.z);
         if (transform.position.y < -200) transform.position = new Vector3(0,0,-0.2f);
     }
 
