@@ -8,7 +8,6 @@ public class JumpObject : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("jump");
         if (collision.gameObject.tag == "foot")
         {
             //collision.GetComponent<PlayerMove>().MustJump(jumpStrenght);

@@ -62,14 +62,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CameraControlls.cs" />
+    <Compile Include="Assets\Scripts\Coin.cs" />
     <Compile Include="Assets\Scripts\Controll.cs" />
     <Compile Include="Assets\Scripts\Enemys.cs" />
     <Compile Include="Assets\Scripts\JumpObject.cs" />
     <Compile Include="Assets\Scripts\KinectManagerScript.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
-    <None Include="Assets\Nature_pixel_art_assets\pixel_snapping_README.txt" />
+    <Compile Include="Assets\Scripts\SurpriseBlock.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Unity/Itario/IT+mario=ITario/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.PixelPerfect.Editor">
+      <HintPath>D:/Unity/Itario/IT+mario=ITario/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>D:/Unity/Itario/IT+mario=ITario/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
@@ -94,6 +99,9 @@
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
       <HintPath>D:/Unity/Itario/IT+mario=ITario/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.PixelPerfect">
+      <HintPath>D:/Unity/Itario/IT+mario=ITario/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>D:/Unity/Itario/IT+mario=ITario/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
