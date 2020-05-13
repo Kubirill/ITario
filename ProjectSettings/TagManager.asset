@@ -8,6 +8,7 @@ TagManager:
   - foot
   - damageZone
   - deatchZone
+  - coin
   layers:
   - Default
   - TransparentFX

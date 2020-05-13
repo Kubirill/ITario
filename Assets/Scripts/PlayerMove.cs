@@ -14,6 +14,7 @@ public class PlayerMove : MonoBehaviour
     [Header("Коэффициент для прекращения прыжка при отжатии кнопки")]
     public float kFall = 1;
     public int hp = 3;
+    public int coins = 0;
 
     private float speed = 0;
     private float jumpHold = 1;
@@ -66,6 +67,7 @@ public class PlayerMove : MonoBehaviour
         {
             Deatch();
         }
+       
     }
 
     public void Deatch()
@@ -77,7 +79,9 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        speed = Mathf.Clamp(speed + Controll.GetHorizontalMove()* accelerate*Time.deltaTime,-MaxSpeed,MaxSpeed);
+        //speed = Mathf.Clamp(speed + Controll.GetHorizontalMove()* accelerate*Time.deltaTime,-MaxSpeed,MaxSpeed);
+        //anim.SetFloat("speedPanda", speed);
+        speed = Mathf.Lerp(speed, Controll.GetHorizontalMove() * MaxSpeed, 0.01f);
         anim.SetFloat("speedPanda", speed);
         if (speed < 0) transform.localScale= new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         else transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);

@@ -63,11 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraControlls.cs" />
+    <Compile Include="Assets\Scripts\Coin.cs" />
     <Compile Include="Assets\Scripts\Controll.cs" />
     <Compile Include="Assets\Scripts\Enemys.cs" />
     <Compile Include="Assets\Scripts\JumpObject.cs" />
     <Compile Include="Assets\Scripts\KinectManagerScript.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
+    <Compile Include="Assets\Scripts\SurpriseBlock.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Unity/Itario/IT+mario=ITario/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
