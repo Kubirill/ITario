@@ -6,10 +6,11 @@ public class Coin : MonoBehaviour
 {
     public Animator anim;
     public bool inBlock = false;
-    private void Start()
+    private void Awake()
     {
         anim = GetComponent<Animator>();
     }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

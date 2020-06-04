@@ -30,19 +30,40 @@ public class SurpriseBlock : MonoBehaviour
     {
         itemCount = itemCount - 1;
         anim.SetBool("use", false);
-        if (itemCount <= 0)
+        if (item != null)
         {
-            anim.SetBool("empty", true);
-            gameObject.GetComponent<SpriteRenderer>().sprite = emptyImage;
+            if (itemCount <= 0)
+            {
+                anim.SetBool("empty", true);
+                gameObject.GetComponent<SpriteRenderer>().sprite = emptyImage;
+            }
         }
+            
     }
     public void SpawnItem()
     {
-         if (item.name == "CoinsPosition")
+        if (item == null)
         {
-            var = Instantiate(item,transform.position+ new Vector3(0,0.5f,0),Quaternion.Euler(Vector3.zero));
-            var.GetComponentInChildren<Coin>().Collect();
+            bool playerBig = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>().bigState;
+            if (playerBig != false)
+            {
+                GameObject.Destroy(gameObject);
+            }
         }
+        else
+        {
+            if (item.name == "CoinsPosition")
+            {
+                var = Instantiate(item, transform.position + new Vector3(0, 0.5f, 0), Quaternion.Euler(Vector3.zero));
+                var.GetComponentInChildren<Coin>().Collect();
+            }
+            if (item.name == "Money")
+            {
+                var = Instantiate(item, transform.position + new Vector3(0, 0.5f, 0), Quaternion.Euler(Vector3.zero));
+                var.GetComponentInChildren<Coin>().Collect();
+            }
+        }
+         
     }
     
 }

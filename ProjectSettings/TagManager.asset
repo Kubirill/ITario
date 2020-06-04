@@ -9,6 +9,7 @@ TagManager:
   - damageZone
   - deatchZone
   - coin
+  - Money
   layers:
   - Default
   - TransparentFX
