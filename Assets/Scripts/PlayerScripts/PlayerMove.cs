@@ -129,8 +129,26 @@ public class PlayerMove : MonoBehaviour
 
     public void Deatch()
     {
-        GameObject.Destroy(gameObject);
-        SceneManager.LoadScene("SampleScene");
+        if (!anim.GetBool("Death"))
+        {
+
+            Time.timeScale = 0.01f;
+            anim.SetBool("Death", true);
+            physics.gravityScale = 0;
+            small.enabled = false;
+            foreach (Collider2D child in GetComponentsInChildren<Collider2D>())
+            {
+                child.enabled = false;
+            }
+
+        }
+    }
+
+    public void DownDeatchAnimation()
+    {
+        Time.timeScale = 1f;
+        physics.AddForce(new Vector2(0, 300));
+        physics.gravityScale = 1;
     }
 
     // Update is called once per frame
