@@ -22,6 +22,7 @@ public class PlayerMove : MonoBehaviour
     public int hp = 3;
     public int coins = 0;
     public bool bigState = false;
+    public bool active=false;
 
     private float speed = 0;
     private float jumpHold = 1;
@@ -32,6 +33,7 @@ public class PlayerMove : MonoBehaviour
     private float maxLeftSpeed;
     private float maxRightSpeed;
     private Text textMoney;
+   
 
     private void Start()
     {
@@ -40,6 +42,12 @@ public class PlayerMove : MonoBehaviour
         anim = GetComponent<Animator>();
         SetStopSpeed(true, true);
         SetStopSpeed(false, true);
+        if (PlayerPrefs.HasKey("Hp"))
+        {
+            hp = PlayerPrefs.GetInt("Hp");
+            GUI g = GameObject.Find("BlackFon").GetComponent<GUI>();
+            g.SetMark(hp);
+        }
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -131,7 +139,8 @@ public class PlayerMove : MonoBehaviour
     {
         if (!anim.GetBool("Death"))
         {
-
+            if (hp > 1) PlayerPrefs.SetInt("Hp", hp - 1);
+            else PlayerPrefs.DeleteKey("Hp");
             Time.timeScale = 0.01f;
             anim.SetBool("Death", true);
             physics.gravityScale = 0;
@@ -147,8 +156,9 @@ public class PlayerMove : MonoBehaviour
     public void DownDeatchAnimation()
     {
         Time.timeScale = 1f;
-        physics.AddForce(new Vector2(0, 300));
-        physics.gravityScale = 1;
+        physics.velocity= (new Vector2(0, 9));
+        //physics.AddForce(new Vector2(0, 300));
+        physics.gravityScale = 2;
     }
 
     // Update is called once per frame
@@ -156,27 +166,31 @@ public class PlayerMove : MonoBehaviour
     {
         //speed = Mathf.Clamp(speed + Controll.GetHorizontalMove()* accelerate*Time.deltaTime,-MaxSpeed,MaxSpeed);
         //anim.SetFloat("speedPanda", speed);
-        speed = Mathf.Clamp(Mathf.Lerp(speed, Controll.GetHorizontalMove() * MaxSpeed, 0.01f),maxLeftSpeed,maxRightSpeed);
-        anim.SetFloat("speedPanda", speed);
-        if (speed < 0) transform.localScale= new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        else transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        transform.position = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
+        if (!anim.GetBool("Death")&&active)
+        {
+            speed = Mathf.Clamp(Mathf.Lerp(speed, Controll.GetHorizontalMove() * MaxSpeed, 0.01f),maxLeftSpeed,maxRightSpeed);
+            anim.SetFloat("speedPanda", speed);
+            if (speed < 0) transform.localScale= new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            else transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.position = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
         
-        if (anim.GetBool("OnGround") && Controll.GetJumpStart())
-        {
-            physics.AddForce(new Vector2(0f, maxJumpStrengh));
+            if (anim.GetBool("OnGround") && Controll.GetJumpStart())
+            {
+                physics.AddForce(new Vector2(0f, maxJumpStrengh));
+            }
+            if ((Controll.GetJumpHold()) && (jumpHold > 0))
+            {
+                //gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, maxJumpStrengh));
+                //jumpHold = jumpHold - Time.deltaTime;
+            }
+            if (Controll.GetJumpStop()&& (physics.velocity.y>0) && (freeJump))
+            {
+                physics.AddForce(new Vector2(0f,-physics.velocity.y*kFall));
+            }
+            if (cam.transform.position.x<transform.position.x-1)        cam.transform.position= new Vector3(gameObject.transform.position.x-1, cam.transform.position.y,cam.transform.position.z);
         }
-        if ((Controll.GetJumpHold()) && (jumpHold > 0))
-        {
-            //gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, maxJumpStrengh));
-            //jumpHold = jumpHold - Time.deltaTime;
-        }
-        if (Controll.GetJumpStop()&& (physics.velocity.y>0) && (freeJump))
-        {
-            physics.AddForce(new Vector2(0f,-physics.velocity.y*kFall));
-        }
-        if (cam.transform.position.x<transform.position.x-1)        cam.transform.position= new Vector3(gameObject.transform.position.x-1, cam.transform.position.y,cam.transform.position.z);
-        if (transform.position.y < -200) transform.position = new Vector3(0,0,-0.2f);
+        
+        if (transform.position.y < -8) SceneManager.LoadScene(0);
     }
 
     public void Setmortal()
