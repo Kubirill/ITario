@@ -17,6 +17,7 @@ public class PlayerMove : MonoBehaviour
     public float maxJumpStrengh = 1;
     public float maxJumpHold = 1;
     public Camera cam;
+    public bool freezeCam=false;
     [Header("Коэффициент для прекращения прыжка при отжатии кнопки")]
     public float kFall = 1;
     public int hp = 3;
@@ -33,7 +34,9 @@ public class PlayerMove : MonoBehaviour
     private float maxLeftSpeed;
     private float maxRightSpeed;
     private Text textMoney;
-   
+    private string tube;
+    private float startTube;
+    private GameObject tp;
 
     private void Start()
     {
@@ -45,12 +48,15 @@ public class PlayerMove : MonoBehaviour
         if (PlayerPrefs.HasKey("Hp"))
         {
             hp = PlayerPrefs.GetInt("Hp");
+            coins= PlayerPrefs.GetInt("Coins");
+            textMoney.text = "x " + coins.ToString();
             GUI g = GameObject.Find("BlackFon").GetComponent<GUI>();
             g.SetMark(hp);
         }
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
+
         if ((collision.transform.tag == "ground")&&!(anim.GetBool("OnGround")))
         {
 
@@ -72,9 +78,11 @@ public class PlayerMove : MonoBehaviour
             big.enabled = true;
             transform.position = transform.position + new Vector3(0,0.5f, 0);
         }
-
-       
         }
+        
+
+
+        
 
     public void SetStopSpeed (bool isLeft,bool isMax)
     {
@@ -91,15 +99,31 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        
-      
-        
+
+        if ((collision.transform.tag == "Teleport") && anim.GetBool("OnGround") && Controll.GetDown()&&active)
+        {
+            active = false;
+            tp = collision.gameObject;
+            transform.position = new Vector3(tp.transform.position.x, transform.position.y, transform.position.z);
+            physics.gravityScale = 0;
+
+            big.enabled = false;
+            small.enabled = false;
+            foreach (Collider2D child in GetComponentsInChildren<Collider2D>())
+            {
+                child.enabled = false;
+            }
+            Debug.Log(tp.GetComponent<Teleport>().tube);
+            Debug.Log(SetDirect(tp.GetComponent<Teleport>().tube));
+            startTube = SetDirect(tp.GetComponent<Teleport>().tube);
+            tube = tp.GetComponent<Teleport>().tube;
+        }
     }
-   
-    
-    private void OnCollisionExit2D(Collision2D collision)
+
+
+        private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.transform.tag == "ground")
         {
@@ -139,8 +163,17 @@ public class PlayerMove : MonoBehaviour
     {
         if (!anim.GetBool("Death"))
         {
-            if (hp > 1) PlayerPrefs.SetInt("Hp", hp - 1);
-            else PlayerPrefs.DeleteKey("Hp");
+            if (hp > 1)
+            {
+                PlayerPrefs.SetInt("Hp", hp - 1);
+                PlayerPrefs.SetInt("Coins", coins);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("Hp");
+                PlayerPrefs.DeleteKey("Coins");
+
+            }
             Time.timeScale = 0.01f;
             anim.SetBool("Death", true);
             physics.gravityScale = 0;
@@ -172,7 +205,7 @@ public class PlayerMove : MonoBehaviour
             anim.SetFloat("speedPanda", speed);
             if (speed < 0) transform.localScale= new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             else transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-            transform.position = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
+            transform.position = new Vector3(Mathf.Max(cam.transform.position.x-8, transform.position.x + speed * Time.deltaTime), transform.position.y, transform.position.z);
         
             if (anim.GetBool("OnGround") && Controll.GetJumpStart())
             {
@@ -187,10 +220,118 @@ public class PlayerMove : MonoBehaviour
             {
                 physics.AddForce(new Vector2(0f,-physics.velocity.y*kFall));
             }
-            if (cam.transform.position.x<transform.position.x-1)        cam.transform.position= new Vector3(gameObject.transform.position.x-1, cam.transform.position.y,cam.transform.position.z);
+            if ((cam.transform.position.x<transform.position.x-1)&&!freezeCam)        cam.transform.position= new Vector3(gameObject.transform.position.x-1, cam.transform.position.y,cam.transform.position.z);
         }
         
-        if (transform.position.y < -8) SceneManager.LoadScene(0);
+        if (transform.position.y < -25) SceneManager.LoadScene(0);
+        if (tube != "")
+        {
+            if (tube == "right")
+            {
+                transform.position = transform.position + new Vector3(Time.deltaTime, 0, 0);
+                if (transform.position.x > startTube + 1.5)
+                {
+                    if (tp != null)
+                    {
+                        Teleportation();
+                    }
+                    else
+                    {
+                        ContinueAdvanture();
+                    }
+                }
+            }
+            if (tube == "left")
+            {
+                transform.position = transform.position - new Vector3(Time.deltaTime, 0, 0);
+                if (transform.position.x < startTube - 1.5)
+                {
+                    if (tp != null)
+                    {
+                        Teleportation();
+                    }
+                    else
+                    {
+                        ContinueAdvanture();
+                    }
+                }
+            }
+            if (tube == "up")
+            {
+                transform.position = transform.position + new Vector3(0, Time.deltaTime, 0);
+                if (transform.position.y > startTube + 1.5)
+                {
+                    if (tp != null)
+                    {
+                        Teleportation();
+                    }
+                    else
+                    {
+                        ContinueAdvanture();
+                    }
+                }
+            }
+            if (tube == "down")
+            {
+                transform.position = transform.position - new Vector3(0,Time.deltaTime, 0);
+                if (transform.position.y < startTube - 1.5)
+                {
+                    if (tp != null)
+                    {
+                        Teleportation();
+                    }
+                    else
+                    {
+                        ContinueAdvanture();
+                    }
+                }
+            }
+        }
+    }
+
+    private float SetDirect(string direction)
+    {
+        if ((direction == "right") || (direction == "left"))
+        {
+            return transform.position.x;
+        }
+        else
+        {
+            return transform.position.y;
+        }
+    }
+
+    private void ContinueAdvanture()
+    {
+        active = true;
+        physics.gravityScale = 2;
+        
+        foreach (Collider2D child in GetComponentsInChildren<Collider2D>())
+        {
+            child.enabled = true;
+        }
+        big.enabled = false;
+        small.enabled = false;
+        if (bigState) big.enabled = true;
+        else small.enabled = true;
+        tube = "";
+        SetStopSpeed(true, true);
+        SetStopSpeed(false, true);
+    }
+
+    private void Teleportation()
+    {
+        Teleport trash = tp.GetComponent<Teleport>();
+        freezeCam = trash.setFreezeCam;
+        transform.position =new Vector3( trash.teleportTarget.x,trash.teleportTarget.y,transform.position.z);
+        cam.transform.position=new Vector3(trash.targetCam.x, trash.targetCam.y, cam.transform.position.z);
+        Debug.Log(trash.tubeExit);
+        Debug.Log(SetDirect(trash.tubeExit));
+        startTube = SetDirect(trash.tubeExit);
+        tube = trash.tubeExit;
+        
+        
+        tp = null;
     }
 
     public void Setmortal()

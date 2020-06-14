@@ -20,4 +20,8 @@ public static class Controll
     {
         return Input.GetKeyUp(KeyCode.Space);
     }
+    public static bool GetDown()
+    {
+        return Input.GetKeyDown(KeyCode.S);
+    }
 }

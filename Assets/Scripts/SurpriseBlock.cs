@@ -32,7 +32,6 @@ public class SurpriseBlock : MonoBehaviour
         if ((collision.transform.tag == "EnemyDown") && anim.GetBool("use"))
         {
             collision.gameObject.GetComponentInParent<Enemys>().TurnDamage();
-            Debug.Log("block");
         }
     }
 
