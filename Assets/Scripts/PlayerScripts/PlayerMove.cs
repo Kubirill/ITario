@@ -61,7 +61,6 @@ public class PlayerMove : MonoBehaviour
         {
 
             freeJump = true;
-            unmortal = false;
             anim.SetBool("OnGround", true);
             jumpHold = maxJumpHold;
 
@@ -106,7 +105,7 @@ public class PlayerMove : MonoBehaviour
         {
             active = false;
             tp = collision.gameObject;
-            transform.position = new Vector3(tp.transform.position.x, transform.position.y, transform.position.z);
+            
             physics.gravityScale = 0;
 
             big.enabled = false;
@@ -115,8 +114,7 @@ public class PlayerMove : MonoBehaviour
             {
                 child.enabled = false;
             }
-            Debug.Log(tp.GetComponent<Teleport>().tube);
-            Debug.Log(SetDirect(tp.GetComponent<Teleport>().tube));
+            transform.position = new Vector3(tp.transform.position.x, transform.position.y, transform.position.z);
             startTube = SetDirect(tp.GetComponent<Teleport>().tube);
             tube = tp.GetComponent<Teleport>().tube;
         }
@@ -188,6 +186,7 @@ public class PlayerMove : MonoBehaviour
 
     public void DownDeatchAnimation()
     {
+        transform.position = new Vector3(transform.position.x, transform.position.y, -0.1f);
         Time.timeScale = 1f;
         physics.velocity= (new Vector2(0, 9));
         //physics.AddForce(new Vector2(0, 300));
@@ -337,8 +336,10 @@ public class PlayerMove : MonoBehaviour
     public void Setmortal()
     {
         unmortal = false;
-        Time.timeScale = 1f;
+        
     }
+    public void setNormalSpeed()
+    { Time.timeScale = 1f; }
 
     public void MustJump(float strenghtJump)
     {
