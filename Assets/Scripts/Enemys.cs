@@ -10,10 +10,17 @@ public class Enemys : MonoBehaviour
     public float speed;
     public bool leftOrientationSprite = true;
     public GameObject[] parts;
+    public bool isJamping;
+    public float YcoordJump;
+    public float jumpTrigger = 15;
+
 
     private Transform player;
 
     private Animator anim;
+
+
+   
 
     private void Start()
     {
@@ -28,22 +35,42 @@ public class Enemys : MonoBehaviour
         if (Mathf.Abs(player.position.x - transform.position.x) < 15 && hp>0)
         {
             transform.position = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
-            if (((transform.position.x < patrulPointOne.x) && (speed < 0)) || ((transform.position.x > patrulPointTwo.x) && (speed > 0)))
+            if (((transform.localPosition.x < patrulPointOne.x) && (speed < 0)) || ((transform.localPosition.x > patrulPointTwo.x) && (speed > 0)))
             {
                 speed = -speed;
                 transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                if (isJamping)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(0, jumpTrigger);
+                    hp = hp - 1;
+                    if (hp <= 0) Damage(1);
+                }
             }
         }
+        if (isJamping && (transform.position.y < YcoordJump))
+        {
+            GetComponent<Rigidbody2D>().velocity=new Vector2(0, jumpTrigger);
+        }
+        if (transform.position.y < -5) GameObject.Destroy(gameObject);
     }
+
 
     public void Damage(int strenght)
     {
         hp = hp - strenght;
-        if (hp <= 0) anim.SetTrigger("die");
-        //GetComponent<Collider2D>().enabled = false;
-        GetComponentInChildren<Collider2D>().enabled = false;
-        GetComponent<Rigidbody2D>().isKinematic = true;
-        foreach (GameObject part in parts)   GameObject.Destroy(part);
+        if (isJamping )hp = 0;
+        
+        if (hp <= 0)
+        {
+            
+            if (anim!=null) anim.SetTrigger("die");
+            if (isJamping) GetComponent<Rigidbody2D>().velocity = new Vector2(0, -15);
+            isJamping = false;
+            //GetComponent<Collider2D>().enabled = false;
+            GetComponentInChildren<Collider2D>().enabled = false;
+            GetComponent<Rigidbody2D>().isKinematic = true;
+            foreach (GameObject part in parts) GameObject.Destroy(part);
+        }
     }
 
     public void TurnDamage()

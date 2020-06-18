@@ -11,6 +11,8 @@ TagManager:
   - Money
   - foot
   - Teleport
+  - boss
+  - triggers
   layers:
   - Default
   - TransparentFX

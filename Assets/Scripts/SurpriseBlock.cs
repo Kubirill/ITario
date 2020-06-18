@@ -33,6 +33,10 @@ public class SurpriseBlock : MonoBehaviour
         {
             collision.gameObject.GetComponentInParent<Enemys>().TurnDamage();
         }
+        if ((collision.transform.tag == "boss") && anim.GetBool("use"))
+        {
+            collision.gameObject.GetComponentInParent<Rigidbody2D>().AddForce(new Vector2(0,300));
+        }
     }
 
     public void UseDone()

@@ -222,7 +222,7 @@ public class PlayerMove : MonoBehaviour
             if ((cam.transform.position.x<transform.position.x-1)&&!freezeCam)        cam.transform.position= new Vector3(gameObject.transform.position.x-1, cam.transform.position.y,cam.transform.position.z);
         }
         
-        if (transform.position.y < -25) SceneManager.LoadScene(0);
+        if (transform.position.y < -25) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         if (tube != "")
         {
             if (tube == "right")
