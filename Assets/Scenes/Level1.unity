@@ -11314,6 +11314,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -11406,6 +11407,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8310288c85d89bc40ab477762a14e2a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _getsureBasePath: D:\Unity\ITarioV2\ITario\Assets\Right3.gbd
 --- !u!4 &530219203 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8401277123783445774, guid: 83a696992a4286445a812ec9dcfd64c9,
@@ -51884,6 +51898,11 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 430810605568745933, guid: 3996ea651093f4640a717fae3e14fc72,
+        type: 3}
+      propertyPath: maxJumpStrengh
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 430810605568745934, guid: 3996ea651093f4640a717fae3e14fc72,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\GUI.cs" />
     <Compile Include="Assets\Scripts\InvisibkeBlock.cs" />
     <Compile Include="Assets\Scripts\KinectManagerScript.cs" />
+    <Compile Include="Assets\Scripts\KinectScripts\KinectManager.cs" />
     <Compile Include="Assets\Scripts\Money.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\Controll.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\JumpObject.cs" />

@@ -129,7 +129,7 @@ MonoBehaviour:
   bigFoot: {fileID: 5252202946801621921}
   MaxSpeed: 6
   accelerate: 8
-  maxJumpStrengh: 700
+  maxJumpStrengh: 13
   maxJumpHold: 0.2
   cam: {fileID: 0}
   freezeCam: 0
