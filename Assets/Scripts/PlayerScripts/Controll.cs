@@ -22,6 +22,6 @@ public static class Controll
     }
     public static bool GetDown()
     {
-        return Input.GetKeyDown(KeyCode.S);
+        return Input.GetKey(KeyCode.S);
     }
 }

@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\SystemMananger.cs" />
     <Compile Include="Assets\Scripts\Teleport.cs" />
     <Compile Include="Assets\Scripts\Timer.cs" />
+    <Compile Include="Assets\Scripts\UpFreeBlock.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Unity/ITarioV2/ITario/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

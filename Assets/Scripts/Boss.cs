@@ -8,13 +8,14 @@ public class Boss : MonoBehaviour
     public GameObject triger;
     public GameObject jerjinsky;
     public float YcoordJump=0.2f;
-
+    public Transform deatch;
 
     private int waitCount=0;
     private int waitCountDance=-4;
     private Animator anim;
     private int readyHP = 2;
     private bool biger = false;
+    private bool downDeatch = false;
     
     private float jumpTrigger = 15;
 
@@ -65,20 +66,43 @@ public class Boss : MonoBehaviour
             enem.hp = readyHP;
             readyHP = readyHP - 1;
             anim.SetTrigger("Damage");
-            enem.speed = 0;
-
         }
-        if (biger && (transform.localScale.y < 1.5))
+        if ((biger && (transform.localScale.y < 1.5))||transform.localScale.y<0)
         {
             transform.localScale = transform.localScale + transform.localScale * 0.005f;
-            if (transform.localScale.x >= 1.5)
+            if (transform.localScale.y >= 1.5)
             {
                 biger = false;
                 transform.localScale = Vector3.one * 1.5f;
             }
         }
-        if ((transform.localScale.y>1.3)&& !anim.GetCurrentAnimatorStateInfo(0).IsName("Damage")&&(enem.speed==0)) enem.speed=2;
+        if ((transform.localScale.y > 1.3) && !anim.GetCurrentAnimatorStateInfo(0).IsName("Damage") && (enem.speed == 0)) enem.speed = 2;
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Damage") ) enem.speed = 0;
+        if (downDeatch && (deatch.position.y > 6.5))
+        {
+            deatch.position = deatch.position - new Vector3(0, Time.deltaTime*3, 0);
+            if (deatch.position.y <= 6.5)
+            {
+                deatch.position = new Vector3(deatch.position.x, 6.5f, deatch.position.z);
+                downDeatch = false;
+            }
+        }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "deatchZone")
+        {
+            transform.position = new Vector3(transform.position.x,transform.position.y, -5);
+            enem.TurnDamage();
+            GameObject[] triggers = GameObject.FindGameObjectsWithTag("triggers");
+            foreach (GameObject trig in triggers)
+            {
+                trig.GetComponent<Enemys>().Deatch();
+            }
+        }
+    }
+    
+
     public void NewPhase()
     {
         if (readyHP == 1)
@@ -96,6 +120,7 @@ public class Boss : MonoBehaviour
                 trash.GetComponent<Enemys>().jumpTrigger = jumpTrigger;
                 trash.GetComponent<Enemys>().YcoordJump = YcoordJump;
             }
+            downDeatch = true;
         }
     }
 }
