@@ -51,8 +51,12 @@ public class Enemys : MonoBehaviour
         {
             GetComponent<Rigidbody2D>().velocity=new Vector2(0, jumpTrigger);
         }
-        if (transform.position.y < -5) GameObject.Destroy(gameObject);
-    }
+        if (transform.position.y < -5)
+        {
+            GameObject.Destroy(gameObject);
+            player.gameObject.GetComponent<PlayerMove>().ChangeEnemy();
+        }
+        }
 
 
     public void Damage(int strenght)
@@ -84,6 +88,7 @@ public class Enemys : MonoBehaviour
         {
             cld.enabled = false;
         }
+        
     }
 
     public void Deatch()

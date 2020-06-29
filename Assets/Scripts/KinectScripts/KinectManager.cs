@@ -20,7 +20,19 @@ public class KinectManager : MonoBehaviour
     Windows.Kinect.Body[] _bodies; // все пользователи, найденные Kinect'ом
     Windows.Kinect.Body _currentBody = null; //Текущий пользователь, жесты которого мы отслеживаем
     public string _getsureBasePath = "Right2.gbd"; //Путь до нашей обученной модели
-    bool gestureDetected = false;
+
+    bool gestureDetectedLeft = false;
+    bool gestureDetectedRight = false;
+    bool gestureDetectedJump = false;
+    bool gestureDetectedDown = false;
+    bool gestureDetectedStop = false;
+    bool gestureDetectedStopJump = false;
+    bool gestureDetectedStopDown = false;
+
+
+
+
+
     public delegate void SimpleEvent();
     public static event SimpleEvent OnSwipeUpDown;
     public static event SimpleEvent Up;
@@ -28,9 +40,12 @@ public class KinectManager : MonoBehaviour
     public static event SimpleEvent Left;
     public static event SimpleEvent Right;
     public static event SimpleEvent Stop;
+    public static event SimpleEvent StopUp;
+    public static event SimpleEvent StopDown;
     // Start is called before the first frame update
     void Start()
     {
+        Controll.Start();
         InitKinect();
     }
 
@@ -50,7 +65,7 @@ public class KinectManager : MonoBehaviour
                 _GLeft = gest;
                // Debug.Log("Added:" + gest.Name);
             }
-            if (gest.Name == "Right_Right")
+            if (gest.Name == "Right"|| gest.Name == "Right_Right")
             {
                 _gestureFrameSource.AddGesture(gest);
                 _GRight = gest;
@@ -62,7 +77,7 @@ public class KinectManager : MonoBehaviour
                 _GUp = gest;
                // Debug.Log("Added:" + gest.Name);
             }
-            if (gest.Name == "seet")
+            if (gest.Name == "Down" || gest.Name == "seet")
             {
                 _gestureFrameSource.AddGesture(gest);
                 _GDown = gest;
@@ -136,50 +151,54 @@ public class KinectManager : MonoBehaviour
                         Debug.Log("Result not null, upResult = " + upResult.Confidence);
                         Debug.Log("Result not null, down  = " + downResult.Confidence);
 
-                        if (leftResult.Confidence > 0.5)
+                        if (leftResult.Confidence > 0.3)
                         {
-                            if (!gestureDetected)
+                            if (!gestureDetectedLeft)
                             {
-                                gestureDetected = true;
+                                gestureDetectedLeft = true;
                                 //Debug.Log("Left Gesture");
-                                
-                                    Controll.horizontal_move = -1;
+
+                                Left?.Invoke();
+
                             }
                         }
                         else
                         {
                             //Debug.Log("False");
 
-                            gestureDetected = false;
+                            gestureDetectedLeft = false;
                         }
 
 
                         if (rightResult.Confidence > 0.3)
                         {
-                            if (!gestureDetected)
+                            if (!gestureDetectedRight)
                             {
-                                gestureDetected = true;
-                                //Debug.Log("Right Gesture");
-                                Controll.horizontal_move = 1;
+                                gestureDetectedRight = true;
+                                if (StopDown != null) Debug.Log("Есть");
+                                else Debug.Log("Нету");
+
+                                Right?.Invoke();
                             }
+                            Debug.Log("Right Gesture");
                         }
                         else
                         {
                             //Debug.Log("False");
 
-                            gestureDetected = false;
+                            gestureDetectedRight = false;
                         }
-                        if ((rightResult.Confidence <= 0.3)&& (leftResult.Confidence <= 0.5))
+                        if ((rightResult.Confidence <= 0.5)&& (leftResult.Confidence <= 0.5))
                         {
                             
-                            if (!gestureDetected)
+                            if (!gestureDetectedStop)
                             {
-                                gestureDetected = true;
-                                Controll.horizontal_move = 0;
-                                
+                                gestureDetectedStop = true;
+                                Stop?.Invoke();
+
                                 //Debug.Log("Stop Gesture");
                                 //if (Stop != null)
-                                    //Controll.horizontal_move = 0 ;
+                                //Controll.horizontal_move = 0 ;
                             }
                         }
 
@@ -187,55 +206,114 @@ public class KinectManager : MonoBehaviour
                         {
                             //Debug.Log("False");
 
-                            gestureDetected = false;
+                            gestureDetectedStop = false;
                         }
 
-                        
-                        if (upResult.Confidence > 0.01)
+
+                        if (upResult.Confidence > 0.3)
                         {
-                            
-                            if (!gestureDetected)
+
+                            if (!gestureDetectedJump)
                             {
-                                Controll.jumpLong++;
-                                gestureDetected = true;
-                                //Debug.Log("Up  Gesture");
-                                if (Controll.jumpLong<2) Controll.start_up_move = true;
-                                else Controll.start_up_move = false;
-                            Controll.up_move = true;
-                               
+
+                                gestureDetectedJump = true;
+                                Up?.Invoke();
+
                             }
                         }
                         else
                         {
-                            //Debug.Log("False");
-                            Controll.up_move = false;
-                            Controll.jumpLong = 0;
-                            gestureDetected = false;
+                            gestureDetectedJump = false;
                         }
-
-                        if (downResult.Confidence > 0.2)
+                        if (upResult.Confidence <= 0.3)
                         {
-                            
-                            if (!gestureDetected)
+
+                            if (!gestureDetectedStopJump)
                             {
-                                gestureDetected = true;
-                                Controll.down_move = true;
-                                //Debug.Log("Up  Gesture");
                                 
+                                gestureDetectedStopJump = true;
+                                StopUp?.Invoke();
+
                             }
                         }
                         else
                         {
-                            // Debug.Log("False");
-                            Controll.down_move = false;
-                            gestureDetected = false;
+                            gestureDetectedStopJump = false;
                         }
+                        if (downResult.Confidence > 0.8)
+                        {
 
+                            if (!gestureDetectedDown)
+                            {
+                                gestureDetectedDown = true;
+                                Down?.Invoke();
+                                //Debug.Log("Up  Gesture");
 
+                            }
+                        }
+                        else
+                        {
+                            gestureDetectedDown = false;
+
+                        }
+                        if (downResult.Confidence <= 0.8)
+                        {
+
+                            if (!gestureDetectedStopDown)
+                            {
+
+                                // Debug.Log("False");
+                                
+                                gestureDetectedStopDown = true;
+                                StopDown?.Invoke();
+                            }
+                        
+                        }
+                        else
+                        {
+                            gestureDetectedStopDown = false;
+
+                        }
                     }
                 }
             }
         }
     }
+    public void Clear()
+    {
+        _dbGestures= null;
+        _kinect = null;
+        _gestureFrameSource = null ;
+        _bodyFrameSource = null;
+        _gestureFrameReader = null;
+        _bodyFrameReader = null;
+        _GLeft = null; // наш жест
+         _GRight = null; // наш жест
+         _GUp = null; // наш жест
+         _GDown = null; // наш жест
+         _bodies = null; // все пользователи, найденные Kinect'ом
+        _currentBody = null; //Текущий пользователь, жесты которого мы отслеживаем
+   
+     gestureDetectedLeft = false;
+     gestureDetectedRight = false;
+     gestureDetectedJump = false;
+     gestureDetectedDown = false;
+     gestureDetectedStop = false;
+     gestureDetectedStopJump = false;
+     gestureDetectedStopDown = false;
 
+
+
+
+
+    
+      OnSwipeUpDown = null;
+      Up = null;
+      Down = null;
+     Left = null;
+      Right = null;
+     Stop = null;
+      StopUp = null;
+     StopDown = null;
+}
 }

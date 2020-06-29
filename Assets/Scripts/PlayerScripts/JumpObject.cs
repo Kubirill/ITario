@@ -11,8 +11,11 @@ public class JumpObject : MonoBehaviour
         if (collision.gameObject.tag == "foot")
         {
             //collision.GetComponent<PlayerMove>().MustJump(jumpStrenght);
-            collision.GetComponentInParent<PlayerMove>().MustJump(jumpStrenght);
+            PlayerMove player= collision.GetComponentInParent<PlayerMove>();
+            player.MustJump(jumpStrenght);
+            player.ChangeEnemy();
             if (gameObject.GetComponentInParent<Enemys>() != null) gameObject.GetComponentInParent<Enemys>().Damage(1);
+
         }
     }
 

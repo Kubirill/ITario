@@ -12,38 +12,41 @@ public static class Controll
 
     public static float GetHorizontalMove()
     {
-        //return Input.GetAxis("Horizontal");
-        return horizontal_move;
+        if (Input.GetAxis("Horizontal") != 0) return Input.GetAxis("Horizontal");
+        else return horizontal_move;
     }
     public static bool GetJumpStart()
     {
-        //return Input.GetKeyDown(KeyCode.Space);
-        return up_move;
+        if (Input.GetKeyDown(KeyCode.Space)) return Input.GetKeyDown(KeyCode.Space);
+        return start_up_move;
     }
     public static bool GetJumpHold()
     {
-        //return Input.GetKey(KeyCode.Space);
+        if ( Input.GetKey(KeyCode.Space)) return Input.GetKey(KeyCode.Space);
         return up_move;
     }
     public static bool GetJumpStop()
     {
-        //return Input.GetKeyUp(KeyCode.Space);
-        return false;
+        if (!Input.GetKeyUp(KeyCode.Space)) return Input.GetKeyUp(KeyCode.Space);
+        return !up_move;
     }
     public static bool GetDown()
     {
-        //return Input.GetKey(KeyCode.S);
+        if (Input.GetKey(KeyCode.S)) return Input.GetKey(KeyCode.S);
         return down_move;
     }
 
+  
 
-    static void Start()
+    public static void Start()
     {
         KinectManager.Left += new KinectManager.SimpleEvent(Left);
         KinectManager.Right += new KinectManager.SimpleEvent(Right);
         KinectManager.Up += new KinectManager.SimpleEvent(Up);
         KinectManager.Down += new KinectManager.SimpleEvent(Down);
         KinectManager.Stop += new KinectManager.SimpleEvent(Stop);
+        KinectManager.StopUp += new KinectManager.SimpleEvent(StopUp);
+        KinectManager.StopDown += new KinectManager.SimpleEvent(StopDown);
     }
 
     static void Left()
@@ -62,8 +65,21 @@ public static class Controll
 
     static void Up()
     {
+        if (up_move) start_up_move = false;
+        else start_up_move = true;
         up_move = true;
     }
+
+    static void StopDown()
+    {
+        down_move = false;
+    }
+
+    static void StopUp()
+    {
+        up_move = false;
+    }
+
     static void Stop()
     {
         horizontal_move = 0;

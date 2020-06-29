@@ -22,6 +22,7 @@ public class PlayerMove : MonoBehaviour
     public float kFall = 1;
     public int hp = 3;
     public int coins = 0;
+    public int enemyKill = 0;
     public bool bigState = false;
     public bool active=false;
 
@@ -34,6 +35,7 @@ public class PlayerMove : MonoBehaviour
     private float maxLeftSpeed;
     private float maxRightSpeed;
     private Text textMoney;
+    private Text textEnemy;
     private string tube;
     private float startTube;
     private GameObject tp;
@@ -42,15 +44,29 @@ public class PlayerMove : MonoBehaviour
     {
         physics = gameObject.GetComponent<Rigidbody2D>();
         textMoney = GameObject.Find("CoinCount").GetComponent<Text>();
+        textEnemy = GameObject.Find("EnemyCount").GetComponent<Text>();
         anim = GetComponent<Animator>();
         SetStopSpeed(true, true);
         SetStopSpeed(false, true);
         if (PlayerPrefs.HasKey("Hp"))
         {
             hp = PlayerPrefs.GetInt("Hp");
-            coins= PlayerPrefs.GetInt("Coins");
+            enemyKill = PlayerPrefs.GetInt("Enemy");
+            coins = PlayerPrefs.GetInt("Coins");
             textMoney.text = "x " + coins.ToString();
+            textEnemy.text= "x " + enemyKill.ToString();
             GUI g = GameObject.Find("BlackFon").GetComponent<GUI>();
+            if (PlayerPrefs.HasKey("Big"))
+            {
+                PlayerPrefs.DeleteKey("Big");
+                bigState = true;
+                anim.SetBool("BigState", true);
+                smallFoot.SetActive(false);
+                bigFoot.SetActive(true);
+                small.enabled = false;
+                big.enabled = true;
+                transform.position = transform.position + new Vector3(0, 0.5f, 0);
+            }
             g.SetMark(hp);
         }
     }
@@ -161,15 +177,18 @@ public class PlayerMove : MonoBehaviour
     {
         if (!anim.GetBool("Death"))
         {
+            cam.GetComponent<KinectManager>().Clear();
             if (hp > 1)
             {
                 PlayerPrefs.SetInt("Hp", hp - 1);
                 PlayerPrefs.SetInt("Coins", coins);
+                PlayerPrefs.SetInt("Enemy", enemyKill);
             }
             else
             {
                 PlayerPrefs.DeleteKey("Hp");
                 PlayerPrefs.DeleteKey("Coins");
+                PlayerPrefs.DeleteKey("Enemy");
 
             }
             Time.timeScale = 0.01f;
@@ -200,7 +219,7 @@ public class PlayerMove : MonoBehaviour
         //anim.SetFloat("speedPanda", speed);
         if (!anim.GetBool("Death")&&active)
         {
-            speed = Mathf.Clamp(Mathf.Lerp(speed, Controll.GetHorizontalMove() * MaxSpeed, 0.05f),maxLeftSpeed,maxRightSpeed);
+            speed = Mathf.Clamp(Mathf.Lerp(speed, Controll.GetHorizontalMove() * MaxSpeed, 0.2f),maxLeftSpeed,maxRightSpeed);
             anim.SetFloat("speedPanda", speed);
             if (speed < 0) transform.localScale= new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             else transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
@@ -234,11 +253,26 @@ public class PlayerMove : MonoBehaviour
             }
             if (transform.position.x > 215)
             {
+                PlayerPrefs.SetInt("Hp", hp - 1);
+                PlayerPrefs.SetInt("Coins", coins);
+                PlayerPrefs.SetInt("Enemy", enemyKill);
+                PlayerPrefs.SetInt("Big", 1);
                 SceneManager.LoadScene(1);
             }
         }
-        
-        if (transform.position.y < -25) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        if (transform.position.y < -25)
+        {
+            if (hp > 1)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            else SceneManager.LoadScene(0);
+
+
+
+
+        }
         if (tube != "")
         {
             if (tube == "right")
@@ -370,5 +404,10 @@ public class PlayerMove : MonoBehaviour
     {
         coins = coins + coinsCount;
         textMoney.text ="x "+coins.ToString();
+    }
+    public void ChangeEnemy()
+    {
+        enemyKill++;
+        textEnemy.text = "x " + enemyKill.ToString();
     }
 }
