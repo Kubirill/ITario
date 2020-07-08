@@ -72,7 +72,7 @@ public class PlayerMove : MonoBehaviour
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-
+        
         if ((collision.transform.tag == "ground")&&!(anim.GetBool("OnGround")))
         {
 
@@ -177,7 +177,8 @@ public class PlayerMove : MonoBehaviour
     {
         if (!anim.GetBool("Death"))
         {
-            cam.GetComponent<KinectManager>().Clear();
+            if (cam.GetComponent<KinectManager>() != null) cam.GetComponent<KinectManager>().Clear();
+            if (cam.GetComponent<KinectManager>()!=null) Object.Destroy(cam.GetComponent<KinectManager>());
             if (hp > 1)
             {
                 PlayerPrefs.SetInt("Hp", hp - 1);
@@ -256,21 +257,21 @@ public class PlayerMove : MonoBehaviour
                 PlayerPrefs.SetInt("Hp", hp - 1);
                 PlayerPrefs.SetInt("Coins", coins);
                 PlayerPrefs.SetInt("Enemy", enemyKill);
-                PlayerPrefs.SetInt("Big", 1);
+                if (bigState) PlayerPrefs.SetInt("Big", 1);
+                else PlayerPrefs.SetInt("Big", 0);
+                if (cam.GetComponent<KinectManager>() != null) cam.GetComponent<KinectManager>().Clear();
+                if (cam.GetComponent<KinectManager>() != null) Object.Destroy(cam.GetComponent<KinectManager>());
                 SceneManager.LoadScene(1);
             }
         }
 
         if (transform.position.y < -25)
         {
-            if (hp > 1)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
+            if (cam.GetComponent<KinectManager>() != null) cam.GetComponent<KinectManager>().Clear();
+            if (cam.GetComponent<KinectManager>() != null) Object.Destroy(cam.GetComponent<KinectManager>());
+            //Deatch();
+            if (hp > 1) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             else SceneManager.LoadScene(0);
-
-
-
 
         }
         if (tube != "")

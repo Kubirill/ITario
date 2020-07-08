@@ -17,6 +17,7 @@ public class KinectManager : MonoBehaviour
     Gesture _GRight; // наш жест
     Gesture _GUp; // наш жест
     Gesture _GDown; // наш жест
+    Gesture _Exit; // наш жест
     Windows.Kinect.Body[] _bodies; // все пользователи, найденные Kinect'ом
     Windows.Kinect.Body _currentBody = null; //Текущий пользователь, жесты которого мы отслеживаем
     public string _getsureBasePath = "Right2.gbd"; //Путь до нашей обученной модели
@@ -28,6 +29,8 @@ public class KinectManager : MonoBehaviour
     bool gestureDetectedStop = false;
     bool gestureDetectedStopJump = false;
     bool gestureDetectedStopDown = false;
+    bool gestureDetectedExit = false;
+    bool gestureDetectedStopExit = false;
 
 
 
@@ -42,13 +45,18 @@ public class KinectManager : MonoBehaviour
     public static event SimpleEvent Stop;
     public static event SimpleEvent StopUp;
     public static event SimpleEvent StopDown;
+    public static event SimpleEvent Exit;
+    public static event SimpleEvent StopExit;
     // Start is called before the first frame update
     void Start()
     {
         Controll.Start();
         InitKinect();
     }
+    void Awake()
+    {
 
+    }
     void InitKinect()
     {
         _dbGestures = VisualGestureBuilderDatabase.Create(_getsureBasePath);
@@ -81,6 +89,12 @@ public class KinectManager : MonoBehaviour
             {
                 _gestureFrameSource.AddGesture(gest);
                 _GDown = gest;
+                //Debug.Log("Added:" + gest.Name);
+            }
+            if (gest.Name == "Exit")
+            {
+                _gestureFrameSource.AddGesture(gest);
+                _Exit = gest;
                 //Debug.Log("Added:" + gest.Name);
             }
         }
@@ -142,14 +156,17 @@ public class KinectManager : MonoBehaviour
                         DiscreteGestureResult rightResult;
                         DiscreteGestureResult upResult;
                         DiscreteGestureResult downResult;
+                        DiscreteGestureResult exitResult;
                         results.TryGetValue(_GLeft, out leftResult);
                         results.TryGetValue(_GRight, out rightResult);
                         results.TryGetValue(_GUp, out upResult);
                         results.TryGetValue(_GDown, out downResult);
+                        results.TryGetValue(_Exit, out exitResult);
                         Debug.Log("Result not null, leftResult = " + leftResult.Confidence);
                         Debug.Log("Result not null, rightResult = " + rightResult.Confidence);
                         Debug.Log("Result not null, upResult = " + upResult.Confidence);
                         Debug.Log("Result not null, down  = " + downResult.Confidence);
+                        Debug.Log("Result not null, down  = " + exitResult.Confidence);
 
                         if (leftResult.Confidence > 0.3)
                         {
@@ -268,6 +285,42 @@ public class KinectManager : MonoBehaviour
                                 StopDown?.Invoke();
                             }
                         
+                        }
+                        else
+                        {
+                            gestureDetectedStopDown = false;
+
+                        }
+
+
+                        if (exitResult.Confidence > 0.3)
+                        {
+
+                            if (!gestureDetectedExit)
+                            {
+                                gestureDetectedExit = true;
+                                Exit?.Invoke();
+                                //Debug.Log("Up  Gesture");
+
+                            }
+                        }
+                        else
+                        {
+                            gestureDetectedDown = false;
+
+                        }
+                        if (exitResult.Confidence <= 0.2)
+                        {
+
+                            if (!gestureDetectedStopExit)
+                            {
+
+                                // Debug.Log("False");
+
+                                gestureDetectedStopExit = true;
+                                StopExit?.Invoke();
+                            }
+
                         }
                         else
                         {

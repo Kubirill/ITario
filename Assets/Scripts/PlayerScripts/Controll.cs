@@ -8,6 +8,7 @@ public static class Controll
     public static bool up_move;
     public static bool start_up_move;
     public static int jumpLong;
+    public static bool exit;
     public static bool down_move;
 
     public static float GetHorizontalMove()
@@ -35,8 +36,13 @@ public static class Controll
         if (Input.GetKey(KeyCode.S)) return Input.GetKey(KeyCode.S);
         return down_move;
     }
+    public static bool GetExit()
+    {
+        if (Input.GetKey(KeyCode.Q)) return Input.GetKey(KeyCode.Q);
+        return exit;
+    }
 
-  
+
 
     public static void Start()
     {
@@ -47,6 +53,7 @@ public static class Controll
         KinectManager.Stop += new KinectManager.SimpleEvent(Stop);
         KinectManager.StopUp += new KinectManager.SimpleEvent(StopUp);
         KinectManager.StopDown += new KinectManager.SimpleEvent(StopDown);
+        KinectManager.Exit += new KinectManager.SimpleEvent(Exit);
     }
 
     static void Left()
@@ -84,6 +91,14 @@ public static class Controll
     {
         horizontal_move = 0;
     }
-    
-    
+    static void Exit()
+    {
+        exit = true;
+    }
+    static void StopExit()
+    {
+        exit = false;
+    }
+
+
 }
