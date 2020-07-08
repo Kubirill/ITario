@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class ControllScreen : MonoBehaviour
 {
-    int time;
+   float time;
+   
    void Start()
     {
         PlayerPrefs.DeleteKey("Hp");
@@ -14,7 +15,7 @@ public class ControllScreen : MonoBehaviour
     }
     void Update()
     {
-        time++;
-        if (time > 1000) SceneManager.LoadScene(0);
+        time=time+Time.deltaTime;
+        if (time > 5) SceneManager.LoadScene(1);
     }
 }

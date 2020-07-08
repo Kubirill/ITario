@@ -162,11 +162,11 @@ public class KinectManager : MonoBehaviour
                         results.TryGetValue(_GUp, out upResult);
                         results.TryGetValue(_GDown, out downResult);
                         results.TryGetValue(_Exit, out exitResult);
-                        Debug.Log("Result not null, leftResult = " + leftResult.Confidence);
-                        Debug.Log("Result not null, rightResult = " + rightResult.Confidence);
+                       // Debug.Log("Result not null, leftResult = " + leftResult.Confidence);
+                       // Debug.Log("Result not null, rightResult = " + rightResult.Confidence);
                         Debug.Log("Result not null, upResult = " + upResult.Confidence);
                         Debug.Log("Result not null, down  = " + downResult.Confidence);
-                        Debug.Log("Result not null, down  = " + exitResult.Confidence);
+                        Debug.Log("Result not null, exitResult  = " + exitResult.Confidence);
 
                         if (leftResult.Confidence > 0.3)
                         {
@@ -257,7 +257,7 @@ public class KinectManager : MonoBehaviour
                         {
                             gestureDetectedStopJump = false;
                         }
-                        if (downResult.Confidence > 0.8)
+                        if (downResult.Confidence > 0.6)
                         {
 
                             if (!gestureDetectedDown)
@@ -273,7 +273,7 @@ public class KinectManager : MonoBehaviour
                             gestureDetectedDown = false;
 
                         }
-                        if (downResult.Confidence <= 0.8)
+                        if (downResult.Confidence <= 0.6)
                         {
 
                             if (!gestureDetectedStopDown)
@@ -293,7 +293,7 @@ public class KinectManager : MonoBehaviour
                         }
 
 
-                        if (exitResult.Confidence > 0.3)
+                        if (exitResult.Confidence > 0.5)
                         {
 
                             if (!gestureDetectedExit)
@@ -306,10 +306,10 @@ public class KinectManager : MonoBehaviour
                         }
                         else
                         {
-                            gestureDetectedDown = false;
+                            gestureDetectedExit = false;
 
                         }
-                        if (exitResult.Confidence <= 0.2)
+                        if (exitResult.Confidence <= 0.3)
                         {
 
                             if (!gestureDetectedStopExit)
@@ -324,7 +324,7 @@ public class KinectManager : MonoBehaviour
                         }
                         else
                         {
-                            gestureDetectedStopDown = false;
+                            gestureDetectedStopExit = false;
 
                         }
                     }

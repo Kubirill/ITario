@@ -7,8 +7,7 @@ public class Money : MonoBehaviour
     public Collider2D colldr;
     public float speed;
     public Rigidbody2D rb;
-
-    private bool onGround;
+    
     private float startY;
     private void Awake()
     {
@@ -36,20 +35,13 @@ public class Money : MonoBehaviour
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == ("ground") && ((collision.contacts[0].point.y > transform.position.y-0.2 ) || (collision.contacts[collision.contactCount - 1].point.y > transform.position.y-0.2 )))
+        if (collision.gameObject.tag == ("ground") && ((collision.contacts[0].point.y > transform.position.y) || (collision.contacts[collision.contactCount - 1].point.y > transform.position.y )))
         {
-            onGround = true;
             //colldr.transform.position = colldr.transform.position + new Vector3(0, speed * Time.deltaTime / 2, 0);
             if (collision.contacts[0].point.x > transform.position.x) speed = -Mathf.Abs(speed);
             else speed = Mathf.Abs(speed);
         }
     }
     
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == ("ground"))
-        {
-            onGround = false;
-        }
-    }
+    
 }

@@ -5982,7 +5982,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 389143064}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!1 &398809067
 GameObject:
   m_ObjectHideFlags: 0
@@ -6968,7 +6968,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271428613}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!1 &1282117515
 GameObject:
   m_ObjectHideFlags: 0
@@ -7338,7 +7338,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1502747553}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!1 &1514502561
 GameObject:
   m_ObjectHideFlags: 0
@@ -7743,7 +7743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8c1a10d12f67f449a51a00cd791044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nowTime: 110
+  nowTime: 120
 --- !u!222 &1668058107
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8048,6 +8048,7 @@ MonoBehaviour:
     type: 3}
   YcoordJump: 0
   deatch: {fileID: 903480126}
+  be: {fileID: 2079668666}
 --- !u!1 &1787680870
 GameObject:
   m_ObjectHideFlags: 0
@@ -8493,6 +8494,7 @@ GameObject:
   - component: {fileID: 2079668663}
   - component: {fileID: 2079668662}
   - component: {fileID: 2079668665}
+  - component: {fileID: 2079668666}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -8592,12 +8594,25 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2079668660}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8310288c85d89bc40ab477762a14e2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _getsureBasePath: D:\Unity\ITarioV2\ITario\Assets\Right4.gbd
+  _getsureBasePath: D:\Unity\ITarioV2\ITario\Assets\Right5.gbd
+--- !u!114 &2079668666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079668660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44d8f6199b6f6904b9501290c4e35082, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
 --- !u!1 &2092734491
 GameObject:
   m_ObjectHideFlags: 0
@@ -8737,7 +8752,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114015420}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!1 &2120909885
 GameObject:
   m_ObjectHideFlags: 0

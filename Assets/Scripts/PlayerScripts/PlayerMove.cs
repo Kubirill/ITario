@@ -25,6 +25,7 @@ public class PlayerMove : MonoBehaviour
     public int enemyKill = 0;
     public bool bigState = false;
     public bool active=false;
+    public CheckGround[] checker;
 
     private float speed = 0;
     private float jumpHold = 1;
@@ -70,12 +71,26 @@ public class PlayerMove : MonoBehaviour
             g.SetMark(hp);
         }
     }
+    private bool CheckContact(Collision2D collision)
+    {
+        bool answer = false;
+        ContactPoint2D[] points= collision.contacts;
+        foreach (ContactPoint2D point in points)
+        {
+            if ((point.point.y<transform.position.y)&& (Mathf.Abs(point.point.x - transform.position.x) < 0.5))
+            {
+                answer = true;
+                break;
+            }
+        }
+        return answer;
+    }
     private void OnCollisionStay2D(Collision2D collision)
     {
         
-        if ((collision.transform.tag == "ground")&&!(anim.GetBool("OnGround")))
+        if ((collision.transform.tag == "ground")&&!(anim.GetBool("OnGround"))&&(checker[0].stay|| checker[1].stay))
         {
-
+            //physics.velocity = new Vector2(physics.velocity.x, 0f);
             freeJump = true;
             anim.SetBool("OnGround", true);
             jumpHold = maxJumpHold;
@@ -83,15 +98,24 @@ public class PlayerMove : MonoBehaviour
         }
         if (collision.transform.tag == "Money")
         {
-            Time.timeScale = 0.1f;
-            bigState = true;
-            GameObject.Destroy(collision.gameObject);
-            anim.SetBool("BigState", true);
-            smallFoot.SetActive(false);
-            bigFoot.SetActive(true);
-            small.enabled = false;
-            big.enabled = true;
-            transform.position = transform.position + new Vector3(0,0.5f, 0);
+            if (!bigState)
+            {
+                Time.timeScale = 0.1f;
+                bigState = true;
+                GameObject.Destroy(collision.gameObject);
+                anim.SetBool("BigState", true);
+                smallFoot.SetActive(false);
+                bigFoot.SetActive(true);
+                small.enabled = false;
+                big.enabled = true;
+                transform.position = transform.position + new Vector3(0, 0.5f, 0);
+            }
+            else
+            {
+                ChangeCoin(10);
+            }
+                
+            
         }
         }
         
@@ -254,14 +278,14 @@ public class PlayerMove : MonoBehaviour
             }
             if (transform.position.x > 215)
             {
-                PlayerPrefs.SetInt("Hp", hp - 1);
+                PlayerPrefs.SetInt("Hp", hp);
                 PlayerPrefs.SetInt("Coins", coins);
                 PlayerPrefs.SetInt("Enemy", enemyKill);
                 if (bigState) PlayerPrefs.SetInt("Big", 1);
                 else PlayerPrefs.SetInt("Big", 0);
                 if (cam.GetComponent<KinectManager>() != null) cam.GetComponent<KinectManager>().Clear();
                 if (cam.GetComponent<KinectManager>() != null) Object.Destroy(cam.GetComponent<KinectManager>());
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(2);
             }
         }
 
@@ -271,7 +295,7 @@ public class PlayerMove : MonoBehaviour
             if (cam.GetComponent<KinectManager>() != null) Object.Destroy(cam.GetComponent<KinectManager>());
             //Deatch();
             if (hp > 1) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            else SceneManager.LoadScene(0);
+            else SceneManager.LoadScene(1);
 
         }
         if (tube != "")

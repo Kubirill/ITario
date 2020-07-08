@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Boss : MonoBehaviour
     public GameObject jerjinsky;
     public float YcoordJump=0.2f;
     public Transform deatch;
+    public BossEnd be;
 
     private int waitCount=0;
     private int waitCountDance=-4;
@@ -26,7 +28,7 @@ public class Boss : MonoBehaviour
     public void SpawnTrigger(int speed)
     {
         waitCount++;
-        if (waitCount >= 5)
+        if ((waitCount >= 5)&&(readyHP>=0))
         {
             waitCount = waitCount - 5;
             GameObject[] trigers = GameObject.FindGameObjectsWithTag("triggers");
@@ -92,6 +94,7 @@ public class Boss : MonoBehaviour
     {
         if (collision.transform.tag == "deatchZone")
         {
+            readyHP = -1;
             transform.position = new Vector3(transform.position.x,transform.position.y, -5);
             enem.TurnDamage();
             GameObject[] triggers = GameObject.FindGameObjectsWithTag("triggers");
@@ -99,6 +102,7 @@ public class Boss : MonoBehaviour
             {
                 trig.GetComponent<Enemys>().Deatch();
             }
+            be.active = true;
         }
     }
     
@@ -123,4 +127,5 @@ public class Boss : MonoBehaviour
             downDeatch = true;
         }
     }
+    
 }

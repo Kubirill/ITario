@@ -13,9 +13,10 @@ public class Enemys : MonoBehaviour
     public bool isJamping;
     public float YcoordJump;
     public float jumpTrigger = 15;
-
+    
 
     private Transform player;
+    private Transform cam;
 
     private Animator anim;
 
@@ -28,11 +29,12 @@ public class Enemys : MonoBehaviour
         else transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         anim=gameObject.GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
     }
     
     private void Update()
     {
-        if (Mathf.Abs(player.position.x - transform.position.x) < 15 && hp>0)
+        if (Mathf.Abs(cam.position.x - transform.position.x) < 16 && hp>0)
         {
             transform.position = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
             if (((transform.localPosition.x < patrulPointOne.x) && (speed < 0)) || ((transform.localPosition.x > patrulPointTwo.x) && (speed > 0)))

@@ -54,6 +54,7 @@ public static class Controll
         KinectManager.StopUp += new KinectManager.SimpleEvent(StopUp);
         KinectManager.StopDown += new KinectManager.SimpleEvent(StopDown);
         KinectManager.Exit += new KinectManager.SimpleEvent(Exit);
+        KinectManager.StopExit += new KinectManager.SimpleEvent(StopExit);
     }
 
     static void Left()
@@ -85,6 +86,7 @@ public static class Controll
     static void StopUp()
     {
         up_move = false;
+        start_up_move = false;
     }
 
     static void Stop()
