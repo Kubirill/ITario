@@ -74,6 +74,7 @@
      <Compile Include="Assets\Scripts\PlayerScripts\JumpObject.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\StopSides.cs" />
+     <Compile Include="Assets\Scripts\Sound.cs" />
      <Compile Include="Assets\Scripts\SurpriseBlock.cs" />
      <Compile Include="Assets\Scripts\SystemMananger.cs" />
      <Compile Include="Assets\Scripts\Teleport.cs" />

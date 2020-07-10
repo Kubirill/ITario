@@ -6,7 +6,10 @@ public class Coin : MonoBehaviour
 {
     public Animator anim;
     public bool inBlock = false;
+    public Sound sound;
+
     private void Awake()
+
     {
         anim = GetComponent<Animator>();
     }
@@ -31,6 +34,7 @@ public class Coin : MonoBehaviour
     public void Collect()
     {
         anim.SetTrigger("collect");
+        sound.Play("Pickup_Coin");
     }
     private void Update()
     {

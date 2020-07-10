@@ -26,6 +26,7 @@ public class PlayerMove : MonoBehaviour
     public bool bigState = false;
     public bool active=false;
     public CheckGround[] checker;
+    public Sound sound;
 
     private float speed = 0;
     private float jumpHold = 1;
@@ -100,6 +101,7 @@ public class PlayerMove : MonoBehaviour
         {
             if (!bigState)
             {
+                sound.Play("Powerup2");
                 Time.timeScale = 0.1f;
                 bigState = true;
                 GameObject.Destroy(collision.gameObject);
@@ -145,7 +147,7 @@ public class PlayerMove : MonoBehaviour
         {
             active = false;
             tp = collision.gameObject;
-            
+            sound.Play("Powerup7");
             physics.gravityScale = 0;
 
             big.enabled = false;
@@ -180,6 +182,7 @@ public class PlayerMove : MonoBehaviour
             if (!bigState) Deatch();
             else
             {
+                sound.Play("Powerup2");
                 Time.timeScale = 0.1f;
                 bigState = false;
                 anim.SetBool("BigState", false);
@@ -199,6 +202,7 @@ public class PlayerMove : MonoBehaviour
 
     public void Deatch()
     {
+        sound.Play("Hit_Hurt3");
         if (!anim.GetBool("Death"))
         {
             if (cam.GetComponent<KinectManager>() != null) cam.GetComponent<KinectManager>().Clear();
@@ -259,6 +263,7 @@ public class PlayerMove : MonoBehaviour
                 
                 //physics.AddForce(new Vector2(0f, maxJumpStrengh));
                 physics.velocity=new Vector2(0f, maxJumpStrengh);
+                sound.Play("Jump");
             }
             if ((Controll.GetJumpHold()) && (jumpHold > 0))
             {
@@ -403,8 +408,8 @@ public class PlayerMove : MonoBehaviour
         Debug.Log(SetDirect(trash.tubeExit));
         startTube = SetDirect(trash.tubeExit);
         tube = trash.tubeExit;
-        
-        
+        sound.Play("Powerup7");
+
         tp = null;
     }
 

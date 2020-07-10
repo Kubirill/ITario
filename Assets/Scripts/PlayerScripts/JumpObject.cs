@@ -14,6 +14,7 @@ public class JumpObject : MonoBehaviour
             PlayerMove player= collision.GetComponentInParent<PlayerMove>();
             player.MustJump(jumpStrenght);
             player.ChangeEnemy();
+            player.sound.Play("Jump");
             if (gameObject.GetComponentInParent<Enemys>() != null) gameObject.GetComponentInParent<Enemys>().Damage(1);
 
         }

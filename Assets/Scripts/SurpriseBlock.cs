@@ -8,6 +8,7 @@ public class SurpriseBlock : MonoBehaviour
     public GameObject item;
     public Sprite emptyImage;
     public GameObject crashSprite;
+    public Sound sound;
 
     GameObject var;
     private Animator anim;
@@ -41,8 +42,10 @@ public class SurpriseBlock : MonoBehaviour
 
     public void UseDone()
     {
+
         itemCount = itemCount - 1;
         anim.SetBool("use", false);
+        
         if (item != null)
         {
             if (itemCount <= 0)
@@ -54,6 +57,11 @@ public class SurpriseBlock : MonoBehaviour
         }
             
     }
+    public void callSound(string name)
+    {
+        sound.Play(name);
+    }
+
     public void SpawnItem()
     {
         if (item == null)

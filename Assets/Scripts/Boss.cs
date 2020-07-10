@@ -11,6 +11,7 @@ public class Boss : MonoBehaviour
     public float YcoordJump=0.2f;
     public Transform deatch;
     public BossEnd be;
+    public Sound sound;
 
     private int waitCount=0;
     private int waitCountDance=-4;
@@ -30,6 +31,7 @@ public class Boss : MonoBehaviour
         waitCount++;
         if ((waitCount >= 5)&&(readyHP>=0))
         {
+            callSound("bossAtake");
             waitCount = waitCount - 5;
             GameObject[] trigers = GameObject.FindGameObjectsWithTag("triggers");
             if (trigers.Length < 8-readyHP*2)
@@ -103,6 +105,7 @@ public class Boss : MonoBehaviour
                 trig.GetComponent<Enemys>().Deatch();
             }
             be.active = true;
+            callSound("bossDeatch");
         }
     }
     
@@ -127,5 +130,8 @@ public class Boss : MonoBehaviour
             downDeatch = true;
         }
     }
-    
+    public void callSound(string name)
+    {
+        sound.Play(name);
+    }
 }

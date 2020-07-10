@@ -13,7 +13,7 @@ public class Enemys : MonoBehaviour
     public bool isJamping;
     public float YcoordJump;
     public float jumpTrigger = 15;
-    
+    public Sound sound;
 
     private Transform player;
     private Transform cam;
@@ -52,6 +52,7 @@ public class Enemys : MonoBehaviour
         if (isJamping && (transform.position.y < YcoordJump))
         {
             GetComponent<Rigidbody2D>().velocity=new Vector2(0, jumpTrigger);
+            sound.Play("trigJump");
         }
         if (transform.position.y < -5)
         {
@@ -63,6 +64,7 @@ public class Enemys : MonoBehaviour
 
     public void Damage(int strenght)
     {
+        sound.Play("Hit_Hurt3");
         hp = hp - strenght;
         if (isJamping )hp = 0;
         
