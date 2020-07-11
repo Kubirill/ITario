@@ -182,6 +182,7 @@ public class PlayerMove : MonoBehaviour
             if (!bigState) Deatch();
             else
             {
+                PlayerPrefs.DeleteKey("Big");
                 sound.Play("Powerup2");
                 Time.timeScale = 0.1f;
                 bigState = false;

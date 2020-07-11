@@ -17,7 +17,7 @@ public class Enemys : MonoBehaviour
 
     private Transform player;
     private Transform cam;
-
+    public bool sayd;
     private Animator anim;
 
 
@@ -34,8 +34,14 @@ public class Enemys : MonoBehaviour
     
     private void Update()
     {
-        if (Mathf.Abs(cam.position.x - transform.position.x) < 16 && hp>0)
+        if (Mathf.Abs(cam.position.x - transform.position.x) < 13 && hp>0)
         {
+            if ((!sayd)&& (Mathf.Abs(cam.position.x - transform.position.x) < 10))
+            {
+                sayd = true;
+                int r = Random.Range(1, 20);
+                if (r<=11)  sound.Play("voice"+r.ToString());
+            }
             transform.position = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
             if (((transform.localPosition.x < patrulPointOne.x) && (speed < 0)) || ((transform.localPosition.x > patrulPointTwo.x) && (speed > 0)))
             {

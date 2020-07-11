@@ -165,6 +165,7 @@ MonoBehaviour:
   YcoordJump: 0.2
   jumpTrigger: 15
   sound: {fileID: 534941244909824120}
+  sayd: 1
 --- !u!50 &1907272679428265404
 Rigidbody2D:
   serializedVersion: 4
