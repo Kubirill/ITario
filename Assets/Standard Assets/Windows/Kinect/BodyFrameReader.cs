@@ -272,7 +272,8 @@ namespace Windows.Kinect
                             Windows_Kinect_BodyFrameReader_add_FrameArrived(_pNative, Windows_Kinect_BodyFrameArrivedEventArgs_Delegate_Handler, true);
                         }
 
-                        _Windows_Kinect_BodyFrameArrivedEventArgs_Delegate_Handle.Free(); // ÌÎÉ ÊÎÌÌÅÍÒ ÁÅÇ íåÃÎ âûëåòàåò!!!!
+                        int i;
+                       // _Windows_Kinect_BodyFrameArrivedEventArgs_Delegate_Handle.Free(); // ÌÎÉ ÊÎÌÌÅÍÒ ÁÅÇ íåÃÎ âûëåòàåò!!!!
                     }
                 }
             }

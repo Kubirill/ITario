@@ -21,10 +21,10 @@ MonoBehaviour:
     y: 30
     width: 1350
     height: 619
-  m_MinSize: {x: 577, y: 300}
-  m_MaxSize: {x: 12002, y: 8021}
+  m_MinSize: {x: 577, y: 450}
+  m_MaxSize: {x: 14000, y: 14021}
   vertical: 0
-  controlID: 383
+  controlID: 102
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -135,10 +135,10 @@ MonoBehaviour:
     y: 0
     width: 924
     height: 619
-  m_MinSize: {x: 302, y: 300}
-  m_MaxSize: {x: 8002, y: 8021}
+  m_MinSize: {x: 302, y: 450}
+  m_MaxSize: {x: 10000, y: 14021}
   vertical: 1
-  controlID: 384
+  controlID: 103
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_MinSize: {x: 302, y: 200}
   m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
-  controlID: 366
+  controlID: 104
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -424,7 +424,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -433,16 +433,16 @@ MonoBehaviour:
     y: 348
     width: 924
     height: 271
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 14}
+  m_MinSize: {x: 230, y: 250}
+  m_MaxSize: {x: 10000, y: 10000}
+  m_ActualView: {fileID: 11}
   m_Panes:
   - {fileID: 11}
   - {fileID: 12}
   - {fileID: 13}
   - {fileID: 14}
-  m_Selected: 3
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 3
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -493,8 +493,8 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 48}
-    m_SelectedIDs: 7a380000
-    m_LastClickedID: 14458
+    m_SelectedIDs: 82380000
+    m_LastClickedID: 14466
     m_ExpandedIDs: 000000004638000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -523,7 +523,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000004638000000ca9a3b
+    m_ExpandedIDs: 0000000046380000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -548,24 +548,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: cc320000
-    m_LastClickedInstanceID: 13004
+    m_SelectedInstanceIDs: 102f0000
+    m_LastClickedInstanceID: 12048
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000d43200004a3300000695ffffc2380000d88100007850000074500000e25500006e5f0000e235000022360000d83600002a360000823b0000023d0000863b0000fa3c00001224040078c90000783e00000e3a00009c3700007a4a00007c4a00009a3c0000f637000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: CameraControlls
-      m_OriginalName: CameraControlls
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 13004
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_CreateAssetUtility:
@@ -846,7 +846,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
-  m_LastInspectedObjectInstanceID: 13004
+  m_LastInspectedObjectInstanceID: 12048
   m_LastVerticalScrollValue: 0
 --- !u!114 &17
 MonoBehaviour:
