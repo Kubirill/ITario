@@ -21,6 +21,9 @@ public class EndScreen : MonoBehaviour
     void Update()
     {
         time = time + Time.deltaTime;
-        if (time > 5) Application.Quit();
+        if (time > 5)
+        {
+            Application.Quit();
+        }
     }
 }

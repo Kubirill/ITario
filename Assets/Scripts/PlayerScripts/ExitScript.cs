@@ -19,8 +19,12 @@ public class ExitScript : MonoBehaviour
             if (!layer.gameObject.activeSelf) layer.gameObject.SetActive(true);
             progress = progress + steep;
             loadIcon.fillAmount =Mathf.Clamp( progress,0,100);
-            
-            if (progress >= 1) Application.Quit();
+
+            if (progress >= 1)
+            {
+                
+                Application.Quit();
+            }
         }
         else
         {

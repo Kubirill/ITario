@@ -8,11 +8,14 @@ public class Timer : MonoBehaviour
 
     float fpsTime = 0;//количесво кадров 
     public int nowTime;//время
+    Text timeText;
     PlayerMove pl;
     // Start is called before the first frame update
     void Start()
     {
         pl = GameObject.Find("Player").GetComponent<PlayerMove>();
+        timeText = gameObject.GetComponent<Text>();
+        timeText.text = "TIME\n" + Zeropad(nowTime, 3);//пишем тест с помощью функции добавления 0
     }
 
     // Update is called once per frame
@@ -23,7 +26,7 @@ public class Timer : MonoBehaviour
         {
             fpsTime = fpsTime - 1;// то отнимаем секунду от долей
             nowTime=nowTime-1;
-            gameObject.GetComponent<Text>().text = "TIME\n" +Zeropad(nowTime , 3);//пишем тест с помощью функции добавления 0
+            timeText.text = "TIME\n" +Zeropad(nowTime , 3);//пишем тест с помощью функции добавления 0
         }
         if (nowTime <= 0)
         {

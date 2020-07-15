@@ -13,7 +13,7 @@ public class BossEnd : MonoBehaviour
         {
             time = time + Time.deltaTime;
             
-            if (time >5) SceneManager.LoadScene(3);
+            if (time >3) SceneManager.LoadScene(3);
         }
     }
 }

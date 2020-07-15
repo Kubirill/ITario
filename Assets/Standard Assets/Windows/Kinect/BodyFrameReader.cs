@@ -272,7 +272,7 @@ namespace Windows.Kinect
                             Windows_Kinect_BodyFrameReader_add_FrameArrived(_pNative, Windows_Kinect_BodyFrameArrivedEventArgs_Delegate_Handler, true);
                         }
 
-                        _Windows_Kinect_BodyFrameArrivedEventArgs_Delegate_Handle.Free();
+                        _Windows_Kinect_BodyFrameArrivedEventArgs_Delegate_Handle.Free(); // ÃŒ…  ŒÃÃ≈Õ“ ¡≈« ÌÂ√Œ ‚˚ÎÂÚ‡ÂÚ!!!!
                     }
                 }
             }
@@ -286,7 +286,7 @@ namespace Windows.Kinect
                         callbackList.Clear();
                         if (_pNative != RootSystem.IntPtr.Zero)
                         {
-                            Windows_Kinect_BodyFrameReader_add_PropertyChanged(_pNative, Windows_Data_PropertyChangedEventArgs_Delegate_Handler, true);
+                           Windows_Kinect_BodyFrameReader_add_PropertyChanged(_pNative, Windows_Data_PropertyChangedEventArgs_Delegate_Handler, true);
                         }
                         _Windows_Data_PropertyChangedEventArgs_Delegate_Handle.Free();
                     }

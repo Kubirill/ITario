@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\InvisibkeBlock.cs" />
      <Compile Include="Assets\Scripts\KinectManagerScript.cs" />
      <Compile Include="Assets\Scripts\KinectScripts\KinectManager.cs" />
+     <Compile Include="Assets\Scripts\Kostil.cs" />
      <Compile Include="Assets\Scripts\Money.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\CheckGround.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\Controll.cs" />

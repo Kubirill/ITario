@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Result.unity
     guid: 8cf0885132971144eb40b9afc21931da
+  - enabled: 1
+    path: Assets/Scenes/Kostul.unity
+    guid: bfd697b2d36085746bdbefe467d8a5a0
   m_configObjects: {}

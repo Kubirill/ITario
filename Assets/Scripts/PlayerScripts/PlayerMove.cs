@@ -27,6 +27,7 @@ public class PlayerMove : MonoBehaviour
     public bool active=false;
     public CheckGround[] checker;
     public Sound sound;
+    public AudioSource GlobalAudio;
 
     private float speed = 0;
     private float jumpHold = 1;
@@ -204,10 +205,9 @@ public class PlayerMove : MonoBehaviour
     public void Deatch()
     {
         sound.Play("Hit_Hurt3");
+        GlobalAudio.Stop();
         if (!anim.GetBool("Death"))
         {
-            if (cam.GetComponent<KinectManager>() != null) cam.GetComponent<KinectManager>().Clear();
-            if (cam.GetComponent<KinectManager>()!=null) Object.Destroy(cam.GetComponent<KinectManager>());
             if (hp > 1)
             {
                 PlayerPrefs.SetInt("Hp", hp - 1);
@@ -235,6 +235,7 @@ public class PlayerMove : MonoBehaviour
 
     public void DownDeatchAnimation()
     {
+        sound.Play("Hit_Hurt10");
         transform.position = new Vector3(transform.position.x, transform.position.y, -0.1f);
         Time.timeScale = 1f;
         physics.velocity= (new Vector2(0, 9));
@@ -258,7 +259,7 @@ public class PlayerMove : MonoBehaviour
                 speed = MaxSpeed;
             }
             transform.position = new Vector3(Mathf.Max(cam.transform.position.x-8, transform.position.x + speed * Time.deltaTime), transform.position.y, transform.position.z);
-        
+            if (Input.GetKeyDown(KeyCode.C)) cam.GetComponent<KinectManager>().Clear();
             if (anim.GetBool("OnGround") && Controll.GetJumpStart()&&(transform.position.x < 185))
             {
                 
@@ -288,20 +289,28 @@ public class PlayerMove : MonoBehaviour
                 PlayerPrefs.SetInt("Coins", coins);
                 PlayerPrefs.SetInt("Enemy", enemyKill);
                 if (bigState) PlayerPrefs.SetInt("Big", 1);
-                else PlayerPrefs.SetInt("Big", 0);
-                if (cam.GetComponent<KinectManager>() != null) cam.GetComponent<KinectManager>().Clear();
-                if (cam.GetComponent<KinectManager>() != null) Object.Destroy(cam.GetComponent<KinectManager>());
+                
+                cam.GetComponent<KinectManager>().Clear();
                 SceneManager.LoadScene(2);
             }
         }
 
         if (transform.position.y < -25)
         {
-            if (cam.GetComponent<KinectManager>() != null) cam.GetComponent<KinectManager>().Clear();
-            if (cam.GetComponent<KinectManager>() != null) Object.Destroy(cam.GetComponent<KinectManager>());
+            
             //Deatch();
-            if (hp > 1) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            else SceneManager.LoadScene(1);
+            if (hp > 1)
+            {
+                //PlayerPrefs.SetInt("Scene", SceneManager.GetActiveScene().buildIndex);
+                cam.GetComponent<KinectManager>().Clear();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            else
+            {
+                cam.GetComponent<KinectManager>().Clear();
+                Application.Quit();
+            }
+
 
         }
         if (tube != "")
